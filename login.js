@@ -3,17 +3,19 @@ import { auth } from './config.js';
 
 
 const form = document.querySelector('#form')
-const email = document.querySelector('#email')
+const email = document.querySelector('#username')
 const password = document.querySelector('#password')
 const signUp = document.querySelector('#signUp')
 
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
+    console.log(email.value);
+    console.log(password.value);
     signInWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
+        .then((res) => {
             // Signed in 
-            const user = userCredential.user;
+            const user = res.user;
             console.log(user);
             window.location = 'web.html'
         })
@@ -21,6 +23,11 @@ form.addEventListener('submit', (e) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorMessage);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                title: 'Something went wrong!',
+              })
         });
 })
 
